@@ -9,6 +9,7 @@ import { UnPoopAllCommand } from './commands/unpoop/unpoop-all.command';
 import { UnPoopCommand } from './commands/unpoop/unpoop.command';
 import { UsersModule } from 'src/users/users.module';
 import { ReactionsModule } from 'src/reactions/reactions.module';
+import { InitCommand } from './commands/init/init.command';
 
 @Module({
   imports: [
@@ -20,7 +21,13 @@ import { ReactionsModule } from 'src/reactions/reactions.module';
     PrismaModule,
     GuildsModule,
   ],
-  providers: [BotGateway, PoopCommand, UnPoopAllCommand, UnPoopCommand],
+  providers: [
+    BotGateway,
+    PoopCommand,
+    UnPoopAllCommand,
+    UnPoopCommand,
+    InitCommand,
+  ],
   exports: [BotGateway],
 })
 export class BotModule {}

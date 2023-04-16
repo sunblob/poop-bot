@@ -14,7 +14,6 @@ importers:
 
   apps/bot:
     specifiers:
-      '@discord-nestjs/core': ^5.3.5
       '@nestjs/cli': ^9.0.0
       '@nestjs/common': ^9.0.0
       '@nestjs/config': ^2.3.1
@@ -53,7 +52,6 @@ importers:
       tsconfig-paths: 4.1.0
       typescript: ^5.0.4
     dependencies:
-      '@discord-nestjs/core': 5.3.5_xj7gn2h5s6nhnpivoyw5fmhtue
       '@nestjs/common': 9.2.1_welcnyot5bzd5wa2aovbkxpi4i
       '@nestjs/config': 2.3.1_b4pxbpa7chblgbyake5iz5rdmu
       '@nestjs/core': 9.2.1_b4pxbpa7chblgbyake5iz5rdmu
@@ -574,23 +572,6 @@ packages:
     dependencies:
       '@jridgewell/trace-mapping': 0.3.9
     dev: true
-
-  /@discord-nestjs/core/5.3.5_xj7gn2h5s6nhnpivoyw5fmhtue:
-    resolution: {integrity: sha512-/9Sv3fHi+G/yO9MeRo69RcID8P/AnSfi18Dzi6RaBmQgrQU5iRwi8BmfBJDotddcR0J4jJlWRrEgqt/pL3Ie+w==}
-    peerDependencies:
-      '@nestjs/common': 8.* || 9.*
-      '@nestjs/core': 8.* || 9.*
-      discord.js: 14.*
-      reflect-metadata: ^0.1.13
-      rxjs: ^7.*
-    dependencies:
-      '@nestjs/common': 9.2.1_welcnyot5bzd5wa2aovbkxpi4i
-      '@nestjs/core': 9.2.1_b4pxbpa7chblgbyake5iz5rdmu
-      class-transformer: 0.5.1
-      discord.js: 14.9.0
-      reflect-metadata: 0.1.13
-      rxjs: 7.8.0
-    dev: false
 
   /@discordjs/builders/1.6.1:
     resolution: {integrity: sha512-CCcLwn/8ANhlAbhlE18fcaN0hfXTen53/JiwZs1t9oE/Cqa9maA8ZRarkCIsXF4J7J/MYnd0J6IsxeKsq+f6mw==}

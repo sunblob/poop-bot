@@ -1,38 +1,29 @@
-FROM node:18-alpine AS builder
+FROM node:18 AS builder
 
-RUN apk add --no-cache libc6-compat
+# RUN apk add --no-cache libc6-compat
 
-RUN apk update
+# RUN apk update
+
+ENV PNPM_HOME="/root/.local/share/pnpm"
+ENV PATH="${PATH}:${PNPM_HOME}"
+
+RUN npm install --global pnpm
 
 # Set working directory
 WORKDIR /app
 
-RUN yarn global add turbo
+RUN pnpm add -g turbo
 
 COPY . .
 
-RUN turbo prune --scope=bot --docker
+RUN pnpm i
 
+# run prisma generate
+RUN pnpm turbo db:generate
 
-# installer
-FROM node:18-alpine AS installer
+# RUN pnpm turbo db:migrate:deploy
 
-RUN apk add --no-cache libc6-compat
+RUN pnpm turbo build --filter=bot
 
-RUN apk update
-
-WORKDIR /app
-
-
-# First install the dependencies (as they change less often)
-COPY .gitignore .gitignore
-COPY --from=builder /app/out/json/ .
-COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-RUN yarn install
- 
-# Build the project
-COPY --from=builder /app/out/full/ .
-RUN yarn turbo run build --filter=web...
- 
-FROM node:alpine AS runner
-WORKDIR /app
+CMD [ "node", "apps/bot/dist/main.js" ]
+# RUN pnpm turbo start:prod
