@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { AttachmentBuilder } from 'discord.js';
 import { Context, ContextOf, On, Once } from 'necord';
 import { GuildsService } from 'src/guilds/guilds.service';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -44,6 +45,12 @@ export class BotGateway {
         guildUserId: guildUser.id,
       },
     });
+
+    // const image = new AttachmentBuilder('./files/eblan.png')
+
+    // message.reply({
+
+    // })
 
     Promise.all([
       reactions.forEach((reaction) => message.react(reaction.name)),
