@@ -1,17 +1,25 @@
-/*
-  Warnings:
+-- CreateEnum
+CREATE TYPE "Role" AS ENUM ('USER', 'ADMIN');
 
-  - You are about to drop the `GuildUser` table. If the table is not empty, all the data it contains will be lost.
+-- CreateTable
+CREATE TABLE "guilds" (
+    "id" TEXT NOT NULL,
+    "name" TEXT,
+    "image" TEXT,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
-*/
--- DropForeignKey
-ALTER TABLE "GuildUser" DROP CONSTRAINT "GuildUser_guildId_fkey";
+    CONSTRAINT "guilds_pkey" PRIMARY KEY ("id")
+);
 
--- DropForeignKey
-ALTER TABLE "GuildUser" DROP CONSTRAINT "GuildUser_userId_fkey";
+-- CreateTable
+CREATE TABLE "users" (
+    "id" TEXT NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL,
 
--- DropTable
-DROP TABLE "GuildUser";
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "guild_user" (
@@ -19,17 +27,17 @@ CREATE TABLE "guild_user" (
     "userId" TEXT NOT NULL,
     "guildId" TEXT NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'USER',
-    "emoji_to_react" TEXT,
 
     CONSTRAINT "guild_user_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "reactions" (
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "guildUserId" TEXT NOT NULL,
 
-    CONSTRAINT "reactions_pkey" PRIMARY KEY ("name")
+    CONSTRAINT "reactions_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
