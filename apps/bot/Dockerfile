@@ -42,8 +42,6 @@ ENV PNPM_HOME="/root/.local/share/pnpm"
 ENV PATH="${PATH}:${PNPM_HOME}"
 RUN npm install --global pnpm
 
-RUN echo $(ls)
-
 COPY --from=installer /app .
 
 CMD [ "node", "./apps/bot/dist/main.js" ]
