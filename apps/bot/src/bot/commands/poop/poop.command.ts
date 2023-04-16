@@ -3,14 +3,14 @@ import { Context, Options, SlashCommand, SlashCommandContext } from 'necord';
 import { PoopDto } from './dto/poop.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UsersService } from 'src/users/users.service';
-import { ReactionsService } from 'src/reactions/reactions.service';
+import { GuildsService } from 'src/guilds/guilds.service';
 
 @Injectable()
 export class PoopCommand {
   constructor(
     private prisma: PrismaService,
     private userService: UsersService,
-    private reactionService: ReactionsService,
+    private guildService: GuildsService,
   ) {}
 
   @SlashCommand({
@@ -23,11 +23,13 @@ export class PoopCommand {
   ) {
     console.log('EMOJI: ', emoji, 'USER: ', guildMember);
 
+    const guild = await this.guildService.findOrCreateGuild(interaction.guild);
+
     const user = await this.userService.findOrCreateUser(guildMember.id);
 
     const guildUser = await this.userService.findOrCreateGuildUser(
       user.id,
-      interaction.guildId,
+      guild.id,
     );
 
     const emojiRegex = /\p{Extended_Pictographic}/gu;
