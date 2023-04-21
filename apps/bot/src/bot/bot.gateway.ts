@@ -57,6 +57,9 @@ export class BotGateway {
     ]);
   }
 
+  // @On('guildAuditLogEntryCreate')
+  // async onAuditLog() {}
+
   @On('error')
   async onError(@Context() [error]: ContextOf<'error'>) {
     console.log('Error occured: ', error);
