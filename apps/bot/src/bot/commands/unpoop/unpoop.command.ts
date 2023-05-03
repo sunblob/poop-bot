@@ -2,10 +2,14 @@ import { Injectable, ValidationPipe } from '@nestjs/common';
 import { Context, Options, SlashCommand, SlashCommandContext } from 'necord';
 import { UnPoopDto } from './dto/unpoop.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class UnPoopCommand {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private userService: UsersService,
+  ) {}
 
   @SlashCommand({
     name: 'unpoop',
@@ -27,6 +31,15 @@ export class UnPoopCommand {
         guildId: interaction.guildId,
       },
     });
+
+    const calledUser = await this.userService.findOrCreateUser(
+      interaction.user.id,
+    );
+
+    const calledGuildUser = await this.userService.findOrCreateGuildUser(
+      calledUser.id,
+      interaction.guildId,
+    );
 
     if (user.id === interaction.user.id && guildUser.role !== 'ADMIN') {
       return interaction.reply({
@@ -87,6 +100,15 @@ export class UnPoopCommand {
         },
       });
     }
+
+    await this.prisma.log.create({
+      data: {
+        type: 'COMMAND',
+        action: 'UNPOOP',
+        userId: calledGuildUser.id,
+        targetUserId: guildUser.id,
+      },
+    });
 
     return interaction.reply({
       content: 'Successfully unpooped.',

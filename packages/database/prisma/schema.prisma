@@ -40,6 +40,7 @@ model GuildUser {
   guildId   String
   role      Role       @default(USER)
   reactions Reaction[]
+  logs      Log[]
 
   @@map("guild_user")
 }
@@ -53,7 +54,31 @@ model Reaction {
   @@map("reactions")
 }
 
+model Log {
+  id           String    @id @default(uuid())
+  userId       String
+  user         GuildUser @relation(fields: [userId], references: [id])
+  type         LogType   @default(COMMAND)
+  action       Action    @default(POOP)
+  targetUserId String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("logs")
+}
+
 enum Role {
   USER
   ADMIN
+}
+
+enum LogType {
+  AUDIT
+  COMMAND
+}
+
+enum Action {
+  POOP
+  UNPOOP
 }

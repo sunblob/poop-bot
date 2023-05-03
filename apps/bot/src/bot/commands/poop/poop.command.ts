@@ -32,6 +32,15 @@ export class PoopCommand {
       guild.id,
     );
 
+    const calledUser = await this.userService.findOrCreateUser(
+      interaction.user.id,
+    );
+
+    const calledGuildUser = await this.userService.findOrCreateGuildUser(
+      calledUser.id,
+      guild.id,
+    );
+
     const emojiRegex = /\p{Extended_Pictographic}/gu;
 
     const isUnicodeEmoji = emojiRegex.test(emoji);
@@ -86,6 +95,15 @@ export class PoopCommand {
         ephemeral: true,
       });
     }
+
+    await this.prisma.log.create({
+      data: {
+        type: 'COMMAND',
+        action: 'POOP',
+        userId: calledGuildUser.id,
+        targetUserId: guildUser.id,
+      },
+    });
 
     return interaction.reply({
       content: 'Successfully pooped.',

@@ -46,19 +46,27 @@ export class BotGateway {
       },
     });
 
-    // const image = new AttachmentBuilder('./files/eblan.png')
-
-    // message.reply({
-
-    // })
-
     Promise.all([
       reactions.forEach((reaction) => message.react(reaction.name)),
     ]);
   }
 
   // @On('guildAuditLogEntryCreate')
-  // async onAuditLog() {}
+  // async onAuditLog(@Context() [audit]: ContextOf<'guildAuditLogEntryCreate'>) {
+  //   const user = await this.prisma.guildUser.findFirst({
+  //     where: {
+  //       id: audit.executorId
+  //     }
+  //   })
+
+  //   await this.prisma.log.create({
+  //     data: {
+  //       type: 'AUDIT',
+  //       userId: user.id,
+  //       action: audit.action
+  //     }
+  //   })
+  // }
 
   @On('error')
   async onError(@Context() [error]: ContextOf<'error'>) {
