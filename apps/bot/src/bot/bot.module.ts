@@ -10,6 +10,7 @@ import { UnPoopCommand } from './commands/unpoop/unpoop.command';
 import { UsersModule } from 'src/users/users.module';
 import { ReactionsModule } from 'src/reactions/reactions.module';
 import { InitCommand } from './commands/init/init.command';
+import { IdiotCommand } from './commands/idiot/idiot.command';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { InitCommand } from './commands/init/init.command';
     UnPoopAllCommand,
     UnPoopCommand,
     InitCommand,
+    IdiotCommand,
   ],
   exports: [BotGateway],
 })
